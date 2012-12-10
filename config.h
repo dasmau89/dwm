@@ -45,14 +45,15 @@ static const Rule rules[] = {
 	{ "Kdiff3",     NULL,     NULL,         1 << 3,     False,      False,    -1 },
 	{ "MPlayer",    NULL,     NULL,         1 << 4,     True,       False,    -1 },
 	{ "Pcmanfm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
+    { "Pidgin",     NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "Spacefm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
 	{ "Vlc",        NULL,     NULL,         1 << 4,     False,      False,    -1 },
-	{ "Xchat",      NULL,     NULL,	        1 << 2,     False,      False,    -1 },
+	{ "Xchat",      NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "zsnes",      NULL,     NULL,         0,          True,       True,     -1 },
 };
 
 /* layout(s) */
-static const float mfact      = 0.65; /* factor of master area size [0.05..0.95] */
+static const float mfact      = 0.555555; /* factor of master area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
 static const Bool resizehints = True; /* True means respect size hints in tiled resizals */
 
@@ -83,6 +84,8 @@ static const char *lockcmd[]  = { "xscreensaver-command", "--lock", NULL};
 static const char *browsercmd[]  = { "firefox", NULL};
 static const char *filebrowsercmd[]  = { "pcmanfm", NULL};
 static const char *termcmd[]  = { "urxvt", NULL};
+static const char *screenbrightnesspcmd[] = { "sudo", "xbacklight", "-inc", "40", NULL };
+static const char *screenbrightnessmcmd[] = { "sudo", "xbacklight", "-dec", "40", NULL };
 
 #include </usr/include/X11/XF86keysym.h> //XF86XK_*
 static Key keys[] = {
@@ -92,7 +95,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask|ControlMask, XK_l,                    spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_b,                    spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_f,                    spawn,          {.v = filebrowsercmd } },
-	{ 0,                            XF86XK_AudioRaiseVolume, spawn,          {.v = volpcmd } },
+	//{ 0,                            XF86XK_MonBrightnessUp,  spawn,          {.v = screenbrightnesspcmd } },
+    { MODKEY,                       XK_Left,                 spawn,          {.v = screenbrightnesspcmd } },
+	//{ 0,                            XF86XK_MonBrightnessDown,spawn,          {.v = screenbrightnessmcmd } },
+    { MODKEY,                       XK_Right,                spawn,          {.v = screenbrightnessmcmd } },
+    { 0,                            XF86XK_AudioRaiseVolume, spawn,          {.v = volpcmd } },
 	{ 0,                            XF86XK_AudioLowerVolume, spawn,          {.v = volmcmd } },
 	{ 0,                            XF86XK_AudioMute,        spawn,          {.v = volmutecmd } },
 	{ MODKEY,                       XK_Tab,                  view,           {0} },
