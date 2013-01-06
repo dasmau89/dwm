@@ -47,6 +47,7 @@ static const Rule rules[] = {
 	{ "Pcmanfm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
 	{ "Pidgin",     NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "Spacefm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
+	{ "Thunderbird",NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "Vlc",        NULL,     NULL,         1 << 4,     False,      False,    -1 },
 	{ "Xchat",      NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "zsnes",      NULL,     NULL,         0,          True,       True,     -1 },
@@ -82,6 +83,7 @@ static const char *volmutecmd[] = { "amixer", "set", "Master", "toggle", NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *lockcmd[]  = { "xscreensaver-command", "--lock", NULL};
 static const char *browsercmd[]  = { "firefox", NULL};
+static const char *mailcmd[]  = { "thunderbird", NULL};
 static const char *filebrowsercmd[]  = { "pcmanfm", NULL};
 static const char *termcmd[]  = { "urxvt", NULL};
 static const char *screenbrightnesspcmd[] = { "sudo", "xbacklight", "-inc", "40", NULL };
@@ -96,6 +98,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_l,                    spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_b,                    spawn,          {.v = browsercmd } },
+	{ MODKEY|ShiftMask,             XK_m,                    spawn,          {.v = mailcmd } },
 	{ MODKEY|ShiftMask,             XK_f,                    spawn,          {.v = filebrowsercmd } },
 	//{ 0,                            XF86XK_MonBrightnessUp,  spawn,          {.v = screenbrightnesspcmd } },
 	{ MODKEY,                       XK_Right,                spawn,          {.v = screenbrightnesspcmd } },
