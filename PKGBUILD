@@ -19,7 +19,7 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 		dwm-6.0-patchsammlung
 )
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         '45c6352b47cf1641c3765e0b724ab111'
+         'f32e1940bf91eee34589a4f239762d08'
          '939f403a71b6e85261d09fc3412269ee'
          '799e7f4979fe081d2b73cf0d255d3ac7'
 )

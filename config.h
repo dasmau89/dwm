@@ -31,7 +31,7 @@ static const Bool clicktofocus      = False;    /* Change focus only on click */
 /* tagging */
 
 static const char *tags[] = { "term", "web", "comm", "coding", "media", "file", "misc"};
-
+//xprop
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating  iscentred  monitor */
 	{ "Clementine", NULL,     NULL,         1 << 4,     False,      False,    -1 },
@@ -47,6 +47,7 @@ static const Rule rules[] = {
 	{ "Pcmanfm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
 	{ "Pidgin",     NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "Spacefm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
+	{ "stalonetray",NULL,     NULL,         0,          True,       False,    -1 },
 	{ "Thunderbird",NULL,     NULL,         1 << 2,     False,      False,    -1 },
 	{ "Vlc",        NULL,     NULL,         1 << 4,     False,      False,    -1 },
 	{ "Xchat",      NULL,     NULL,         1 << 2,     False,      False,    -1 },
