@@ -27,31 +27,36 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 static const Bool clicktofocus      = False;    /* Change focus only on click */
+static const int systrayspacing     = 1;        /* for systray-patch*/
+static const Bool systray_enable    = True;     /* for systray-patch*/
+static const Bool showsystray       = True;     /* False means no systray */
 
 /* tagging */
 
 static const char *tags[] = { "term", "web", "comm", "coding", "media", "file", "misc"};
 //xprop
 static const Rule rules[] = {
-	/* class      instance    title       tags mask     isfloating  iscentred  monitor */
-	{ "Clementine", NULL,     NULL,         1 << 4,     False,      False,    -1 },
-	{ "Chromium",   NULL,     NULL,         1 << 1,     False,      False,    -1 },
-	{ "BitThief",   NULL,     NULL,         0,          True,       True,     -1 },
-	{ "bluej-Boot", NULL,     NULL,         1 << 3,     True,       True,     -1 },
-	{ "Deadbeef",   NULL,     NULL,         1 << 4,     False,      False,    -1 },
-	{ "Firefox",    NULL,     NULL,         1 << 1,     False,      False,    -1 },
-	{ "Geany",      NULL,     NULL,         1 << 3,     False,      False,    -1 },
-	{ "Gimp",       NULL,     NULL,         0,          True,       False,    -1 },
-	{ "Kdiff3",     NULL,     NULL,         1 << 3,     False,      False,    -1 },
-	{ "MPlayer",    NULL,     NULL,         1 << 4,     True,       False,    -1 },
-	{ "Pcmanfm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
-	{ "Pidgin",     NULL,     NULL,         1 << 2,     False,      False,    -1 },
-	{ "Spacefm",    NULL,     NULL,         1 << 5,     False,      False,    -1 },
-	{ "stalonetray",NULL,     NULL,         0,          True,       False,    -1 },
-	{ "Thunderbird",NULL,     NULL,         1 << 2,     False,      False,    -1 },
-	{ "Vlc",        NULL,     NULL,         1 << 4,     False,      False,    -1 },
-	{ "Xchat",      NULL,     NULL,         1 << 2,     False,      False,    -1 },
-	{ "zsnes",      NULL,     NULL,         0,          True,       True,     -1 },
+	/* class		instance	title		tags mask	isfloating	iscentred	monitor */
+	{ "Clementine",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
+	{ "Chromium",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
+	{ "BitThief",		NULL,		NULL,		0,		True,		True,		-1 },
+	{ "bluej-Boot",		NULL,		NULL,		1 << 3,		True,		True,		-1 },
+	{ "Deadbeef",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
+	{ "Firefox",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
+	{ "Geany",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "Gimp",		NULL,		NULL,		0,		True,		False,		-1 },
+	{ "Gnome-mplayer",	NULL,		NULL,		1 << 4,		True,		False,		-1 },
+	{ "Kdiff3",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "MPlayer",		NULL,		NULL,		1 << 4,		True,		False,		-1 },
+	{ "Pcmanfm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "Pidgin",		NULL,		NULL,		1 << 2,		False,		False,		-1 },
+	{ "Qtfm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "Spacefm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "stalonetray",	NULL,		NULL,		0,		True,		False,		-1 },
+	{ "Thunderbird",	NULL,		NULL,		1 << 2,		False,		False,		-1 },
+	{ "Vlc",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
+	{ "Xchat",		NULL,		NULL,		1 << 2,		False,		False,		-1 },
+	{ "zsnes",		NULL,		NULL,		0,		True,		True,		-1 },
 };
 
 /* layout(s) */
@@ -83,6 +88,7 @@ static const char *volmcmd[] = { "amixer", "-c", "0", "set", "Master", "3-", "un
 static const char *volmutecmd[] = { "amixer", "set", "Master", "toggle", NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *lockcmd[]  = { "xscreensaver-command", "--lock", NULL};
+static const char *idecmd[]  = { "geany", NULL};
 static const char *browsercmd[]  = { "firefox", NULL};
 static const char *mailcmd[]  = { "thunderbird", NULL};
 static const char *filebrowsercmd[]  = { "pcmanfm", NULL};
@@ -99,6 +105,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_l,                    spawn,          {.v = lockcmd } },
 	{ MODKEY|ShiftMask,             XK_b,                    spawn,          {.v = browsercmd } },
+	{ MODKEY|ShiftMask,             XK_c,                    spawn,          {.v = idecmd } },
 	{ MODKEY|ShiftMask,             XK_m,                    spawn,          {.v = mailcmd } },
 	{ MODKEY|ShiftMask,             XK_f,                    spawn,          {.v = filebrowsercmd } },
 	//{ 0,                            XF86XK_MonBrightnessUp,  spawn,          {.v = screenbrightnesspcmd } },

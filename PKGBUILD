@@ -16,23 +16,34 @@ install=dwm.install
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 		config.h
 		dwm.desktop
+		dwm-6.0-systray
+		dwm-6.0-patchsammlung+systray
 		dwm-6.0-patchsammlung
-)
+		dwm-and-stuff
+)	
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         'f32e1940bf91eee34589a4f239762d08'
-         '939f403a71b6e85261d09fc3412269ee'
+         '70f232b2b3e846a292c3f544c5d3d1a4'
+         'cb23306361d4d85d0ae89c7f68ad2c8a'
+         '0a527af3bcfbf628ed118bdf86521161'
+         '63cef5d635e87be67581469b13e7c70f'
          '799e7f4979fe081d2b73cf0d255d3ac7'
+		'6c1d39c01638d2b4e9df9f19d6128962'
 )
 build() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
+  cp $srcdir/dwm-6.0-patchsammlung+systray .
   cp $srcdir/dwm-6.0-patchsammlung .
+  #cp $srcdir/dwm-6.0-systray .
   patch -p1 < dwm-6.0-patchsammlung
+#patch -p1 < dwm-6.0-patchsammlung+systray
+#  patch -p1 < dwm-6.0-systray
   sed -i 's/CPPFLAGS =/CPPFLAGS +=/g' config.mk
   sed -i 's/^CFLAGS = -g/#CFLAGS += -g/g' config.mk
   sed -i 's/^#CFLAGS = -std/CFLAGS += -std/g' config.mk
   sed -i 's/^LDFLAGS = -g/#LDFLAGS += -g/g' config.mk
   sed -i 's/^#LDFLAGS = -s/LDFLAGS += -s/g' config.mk
+  make clean
   make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
 }
 
@@ -42,4 +53,5 @@ package() {
   install -m644 -D LICENSE $pkgdir/usr/share/licenses/$pkgname/LICENSE
   install -m644 -D README $pkgdir/usr/share/doc/$pkgname/README
   install -m644 -D $srcdir/dwm.desktop $pkgdir/usr/share/xsessions/dwm.desktop
+  install -m755 -D $srcdir/dwm-and-stuff $pkgdir/usr/bin/dwm-and-stuff
 }
