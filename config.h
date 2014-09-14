@@ -33,30 +33,44 @@ static const Bool showsystray       = True;     /* False means no systray */
 
 /* tagging */
 
-static const char *tags[] = { "term", "web", "comm", "coding", "media", "file", "misc"};
+static const char *tags[] = { "term", "web", "comm", "coding", "media", "file", "misc", "game"};
 //xprop
 static const Rule rules[] = {
 	/* class		instance	title		tags mask	isfloating	iscentred	monitor */
+	{ "adom",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
+	{ "Angband",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Audacious",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
-	{ "Clementine",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
-	{ "Chromium",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
 	{ "BitThief",		NULL,		NULL,		0,		True,		True,		-1 },
 	{ "bluej-Boot",		NULL,		NULL,		1 << 3,		True,		True,		-1 },
+	{ "brogue",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
+	{ "Clementine",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
+	{ "Chromium",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
+	{ "crawl-tiles",	NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Deadbeef",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
+	{ "Diffuse",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "doomrl",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "dosbox",		NULL,		NULL,		0,		True,		True,		-1 },
 	{ "Firefox",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
+	{ "FTL",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Geany",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Gimp",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
 	{ "Gnome-mplayer",	NULL,		NULL,		1 << 4,		True,		False,		-1 },
 	{ "Kdiff3",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "mono-sgen",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "MPlayer",		NULL,		NULL,		1 << 4,		True,		False,		-1 },
 	{ "Pcmanfm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "PCSXR",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Pidgin",		NULL,		NULL,		1 << 2,		False,		False,		-1 },
+	{ "powder",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Qtfm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "rl",			NULL,		NULL,		1 << 7,		True,		False,		-1 },
+	{ "sil",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Spacefm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
 	{ "stalonetray",	NULL,		NULL,		0,		True,		False,		-1 },
 	{ "Steam",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
+	{ "t-engine",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Thunderbird",	NULL,		NULL,		1 << 2,		False,		False,		-1 },
+	{ "urw3-bin",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Vlc",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
 	{ "Xchat",		NULL,		NULL,		1 << 2,		False,		False,		-1 },
 	{ "zsnes",		NULL,		NULL,		0,		True,		True,		-1 },
