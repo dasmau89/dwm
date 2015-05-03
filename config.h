@@ -66,6 +66,7 @@ static const Rule rules[] = {
 	{ "rl",			NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "sil",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Spacefm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
+	{ "sublime-text",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "stalonetray",	NULL,		NULL,		0,		True,		False,		-1 },
 	{ "Steam",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
 	{ "t-engine",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
@@ -106,7 +107,8 @@ static const char *volmutecmd[] = { "amixer", "set", "Master", "toggle", NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *lockcmd[]  = { "xscreensaver-command", "--lock", NULL};
 static const char *idecmd[]  = { "geany", NULL};
-static const char *browsercmd[]  = { "firefox", NULL};
+//static const char *browsercmd[]  = { "firefox", NULL};
+static const char *browsercmd[]  = { "chromium", NULL};
 static const char *mailcmd[]  = { "thunderbird", NULL};
 static const char *filebrowsercmd[]  = { "pcmanfm", NULL};
 static const char *termcmd[]  = { "urxvtc", NULL};
