@@ -39,6 +39,7 @@ static const Rule rules[] = {
 	/* class		instance	title		tags mask	isfloating	iscentred	monitor */
 	{ "adom",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Angband",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
+	{ "atom",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Audacious",		NULL,		NULL,		1 << 4,		False,		False,		-1 },
 	{ "BitThief",		NULL,		NULL,		0,		True,		True,		-1 },
 	{ "bluej-Boot",		NULL,		NULL,		1 << 3,		True,		True,		-1 },
@@ -50,11 +51,13 @@ static const Rule rules[] = {
 	{ "Diffuse",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "doomrl",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "dosbox",		NULL,		NULL,		0,		True,		True,		-1 },
+	{ "Eclipse",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Firefox",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
 	{ "FTL",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Geany",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Gimp",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
 	{ "Gnome-mplayer",	NULL,		NULL,		1 << 4,		True,		False,		-1 },
+	{ "Gvim",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Kdiff3",		NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "Midori",		NULL,		NULL,		1 << 1,		False,		False,		-1 },
 	{ "mono-sgen",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
@@ -67,7 +70,7 @@ static const Rule rules[] = {
 	{ "rl",			NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "sil",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Spacefm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
-	{ "sublime-text",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "sublime_text",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "stalonetray",	NULL,		NULL,		0,		True,		False,		-1 },
 	{ "Steam",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
 	{ "Skype",	NULL,		NULL,		1 << 2,		False,		False,		-1 },
@@ -111,6 +114,7 @@ static const char *lockcmd[]  = { "xscreensaver-command", "--lock", NULL};
 static const char *idecmd[]  = { "geany", NULL};
 //static const char *browsercmd[]  = { "firefox", NULL};
 static const char *browsercmd[]  = { "chromium", NULL};
+static const char *clickrcmd[]  = { "clickr.sh", NULL};
 static const char *mailcmd[]  = { "thunderbird", NULL};
 static const char *filebrowsercmd[]  = { "pcmanfm", NULL};
 static const char *termcmd[]  = { "urxvtc", NULL};
@@ -125,6 +129,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,                    spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,               spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask|ControlMask, XK_l,                    spawn,          {.v = lockcmd } },
+	{ MODKEY|ShiftMask|ControlMask, XK_c,                    spawn,          {.v = clickrcmd } },
 	{ MODKEY|ShiftMask,             XK_b,                    spawn,          {.v = browsercmd } },
 	{ MODKEY|ShiftMask,             XK_g,                    spawn,          {.v = idecmd } },
 	{ MODKEY|ShiftMask,             XK_m,                    spawn,          {.v = mailcmd } },
