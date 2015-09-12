@@ -5,7 +5,7 @@
 
 pkgname=dwm
 pkgver=6.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
 arch=('i686' 'x86_64')
@@ -22,7 +22,7 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 		dwm-and-stuff
 )
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         'da20a81ba21e1f15878ce85729763766'
+         'cebdb448937e93da38e5990e95da64dd'
          'cb23306361d4d85d0ae89c7f68ad2c8a'
          '0a527af3bcfbf628ed118bdf86521161'
          '63cef5d635e87be67581469b13e7c70f'
@@ -55,3 +55,17 @@ package() {
   install -m644 -D $srcdir/dwm.desktop $pkgdir/usr/share/xsessions/dwm.desktop
   install -m755 -D $srcdir/dwm-and-stuff $pkgdir/usr/bin/dwm-and-stuff
 }
+md5sums=('8bb00d4142259beb11e13473b81c0857'
+         '2e47bda67a9a0e574317b494d846e488'
+         'cb23306361d4d85d0ae89c7f68ad2c8a'
+         '0a527af3bcfbf628ed118bdf86521161'
+         '63cef5d635e87be67581469b13e7c70f'
+         '799e7f4979fe081d2b73cf0d255d3ac7'
+         '6c1d39c01638d2b4e9df9f19d6128962')
+md5sums=('8bb00d4142259beb11e13473b81c0857'
+         '2e47bda67a9a0e574317b494d846e488'
+         'cb23306361d4d85d0ae89c7f68ad2c8a'
+         '0a527af3bcfbf628ed118bdf86521161'
+         '63cef5d635e87be67581469b13e7c70f'
+         '799e7f4979fe081d2b73cf0d255d3ac7'
+         '6c1d39c01638d2b4e9df9f19d6128962')
