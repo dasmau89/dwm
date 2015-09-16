@@ -71,6 +71,7 @@ static const Rule rules[] = {
 	{ "sil",		NULL,		NULL,		1 << 7,		True,		False,		-1 },
 	{ "Spacefm",		NULL,		NULL,		1 << 5,		False,		False,		-1 },
 	{ "sublime_text",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
+	{ "subl3",	NULL,		NULL,		1 << 3,		False,		False,		-1 },
 	{ "stalonetray",	NULL,		NULL,		0,		True,		False,		-1 },
 	{ "Steam",		NULL,		NULL,		1 << 6,		True,		False,		-1 },
 	{ "Skype",	NULL,		NULL,		1 << 2,		False,		False,		-1 },
