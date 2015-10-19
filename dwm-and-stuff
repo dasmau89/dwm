@@ -1,0 +1,26 @@
+#!/bin/bash
+export BROWSER=firefox
+export DE=xfce
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+exec unclutter &
+exec /usr/bin/xscreensaver -no-splash &
+wmname LG3D&
+
+xset +fp /usr/share/fonts/local&
+xset fp rehash&
+
+# Start a D-Bus session
+source /etc/X11/xinit/xinitrc.d/30-dbus
+# Start GNOME Keyring
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+# You probably need to do this too:
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+export GNOME_KEYRING_CONTROL
+export GNOME_KEYRING_PID
+
+while true; do
+	/usr/bin/update_dwm_status.sh
+done &
+
+exec dbus-launch dwm
