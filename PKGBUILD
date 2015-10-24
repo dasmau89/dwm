@@ -21,11 +21,11 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
         update_dwm_status.sh
 )
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         'f155900cfaa630427986fca512813b1c'
+         '62152189fcb20171aaeda8e495b3ed4a'
          'cb23306361d4d85d0ae89c7f68ad2c8a'
          '799e7f4979fe081d2b73cf0d255d3ac7'
          'd9f5b18b7ece55e15b85b149c6eaad90'
-         'ade18d770c8ddefbb5deb15e0dc2ee1a')
+         '802c81f6748ec050b55289307937788f')
 build() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
