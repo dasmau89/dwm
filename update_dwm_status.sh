@@ -35,59 +35,62 @@ volume() {
 }
 
 #Batterie
-logo_bat=""
-logo_bat_plug=""
-logo_bat_full=""
-logo_bat_medium=""
-logo_bat_low=""
-logo_bat_emty=""
-if [ -f /usr/bin/acpi ]
-then
-  Bat=$(acpi -b)
-  if [ "$Bat" != "" ]
-  then #Bat="B "$(awk 'sub(/,/,"") {print $3, "["$4"]"}' <(acpi -b) | sed -e 's/,//g')" | "
-    Bat_percentage=$(echo $Bat | awk 'sub(/,/,"") {print $4}' | sed -e 's/,//g' -e 's/%//g')
-    if [[ $Bat_percentage -ge 90 ]]
-    then #bis 90% -> das volle logo
-      Bat_logo=$color_ok$logo_bat_full$color_normal
-    else
-      if [[ $Bat_percentage -ge 70 ]]
-      then #bis 70% -> das fast volle logo
-        Bat_logo=$color_yellow$logo_bat_medium$color_normal
+battery() {
+  declare -r logo_bat=""
+  declare -r logo_bat_plug=""
+  declare -r ogo_bat_full=""
+  declare -r ogo_bat_medium=""
+  declare -r logo_bat_low=""
+  declare -r logo_bat_emty=""
+  if [ -f /usr/bin/acpi ]
+  then
+    Bat=$(acpi -b)
+    if [ "$Bat" != "" ]
+    then #Bat="B "$(awk 'sub(/,/,"") {print $3, "["$4"]"}' <(acpi -b) | sed -e 's/,//g')" | "
+      Bat_percentage=$(echo $Bat | awk 'sub(/,/,"") {print $4}' | sed -e 's/,//g' -e 's/%//g')
+      if [[ $Bat_percentage -ge 90 ]]
+      then #bis 90% -> das volle logo
+        Bat_logo=$color_ok$logo_bat_full$color_normal
       else
-        if [[ $Bat_percentage -ge 40 ]]
-        then #bis 40% -> das fast leere logo
-          Bat_logo=$color_warning$logo_bat_low$color_normal
-        else #unter 40% -> das leere logo
-          Bat_logo=$color_error$logo_bat_emty$color_normal
+        if [[ $Bat_percentage -ge 70 ]]
+        then #bis 70% -> das fast volle logo
+          Bat_logo=$color_yellow$logo_bat_medium$color_normal
+        else
+          if [[ $Bat_percentage -ge 40 ]]
+          then #bis 40% -> das fast leere logo
+            Bat_logo=$color_warning$logo_bat_low$color_normal
+          else #unter 40% -> das leere logo
+            Bat_logo=$color_error$logo_bat_emty$color_normal
+          fi
         fi
       fi
-    fi
-    Bat_status=$(echo $Bat | awk 'sub(/,/,"") {print $3}' | sed -e 's/,//g')
-    if [ "$Bat_status" == "Charging" ]
-    then
-      Bat_status=$color_ok$logo_bat_plug$color_normal
-    else
-      if [ "$Bat_status" == "Full" ] #show plug if battery is fully charged and ac on
+      Bat_status=$(echo $Bat | awk 'sub(/,/,"") {print $3}' | sed -e 's/,//g')
+      if [ "$Bat_status" == "Charging" ]
       then
-        Bat_logo=$color_ok$logo_bat_plug$color_normal
+        Bat_status=$color_ok$logo_bat_plug$color_normal
+      else
+        if [ "$Bat_status" == "Full" ] #show plug if battery is fully charged and ac on
+        then
+          Bat_logo=$color_ok$logo_bat_plug$color_normal
+        fi
+        Bat_status="" #don't display text message
       fi
-      Bat_status="" #don't display text message
-    fi
-    Bat_time=$(echo $Bat | awk 'sub(/,/,"") {print $5}' | sed -e 's/,//g')
-    if [ "$Bat_time" == "discharging" ] || [ "$Bat_time" == "charging" ]
-    then
-      Bat_time=""
-    else
-      Bat_time=$(echo $Bat_time | awk -F: '{print $1":"$2}')
-      if [ "$Bat_time" == ":" ]
+      Bat_time=$(echo $Bat | awk 'sub(/,/,"") {print $5}' | sed -e 's/,//g')
+      if [ "$Bat_time" == "discharging" ] || [ "$Bat_time" == "charging" ]
       then
         Bat_time=""
+      else
+        Bat_time=$(echo $Bat_time | awk -F: '{print $1":"$2}')
+        if [ "$Bat_time" == ":" ]
+        then
+          Bat_time=""
+        fi
       fi
+      Bat_stat=$color_selected$logo_bat$color_normal$Bat_status$Bat_time$Bat_logo" "
     fi
-    Bat_stat=$color_selected$logo_bat$color_normal$Bat_status$Bat_time$Bat_logo" "
   fi
-fi
+  echo $Bat_stat
+}
 
 #Ram (benutzte Prozente = gesammt($2)-(frei+cache($4+$7))/gesammt)
 #Mem=$color_selected""$color_normal" "$(($(free -m|awk '/^Mem:/{print $2-($4+$7)}')*100/$(free -m|awk '/^Mem:/{print $2}')))"  "
@@ -244,7 +247,7 @@ then
 fi
 
 #Zusammenfassung
-Output=$Daemon$Net_status$Cpu$Temp$Mem$Bat_stat$(volume)$Display$Date
+Output=$Daemon$Net_status$Cpu$Temp$Mem$(battery)$(volume)$Display$Date
 if [ "$1" != "" ]
 then #mit Parameter gestarted (debug)
   echo $Output
