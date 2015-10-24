@@ -1,34 +1,38 @@
 #!/bin/bash
-declare color_normal=""
-declare color_selected=""
-declare color_warning=""
-declare color_error=""
+declare -r color_normal=""
+declare -r color_selected=""
+declare -r color_warning=""
+declare -r color_error=""
 #color_statuscolors=""
-declare color_ok=""
-declare color_yellow=""
+declare -r color_ok=""
+declare -r color_yellow=""
 
 #Time and Date
-declare logo_date_clock=""
-declare Date=$color_selected$logo_date_clock$color_normal$(date +"%a, %d.%m %R")
+declare -r logo_date_clock=""
+declare -r Date=$color_selected$logo_date_clock$color_normal$(date +"%a, %d.%m %R")
 
 #Audio
-logo_volume_high=""
-logo_volume_low=""
-logo_volume_mute=""
-Vol_raw=$(awk '/dB/' <(amixer get Master))
-Volume_percentage=$(awk '/dB/ { gsub(/[\[\]]/,""); print $4}' <(amixer get Master)| sed -e 's/%//g')
-if [ "$(echo $Vol_raw | awk '/dB/ { gsub(/[\[\]]/,""); print $6}')" == "on" ]
-then
-  if [ $Volume_percentage -ge 60 ]
+# TODO currently only works with ALSA, not with pulseaudio
+volume() {
+  local logo_volume_high=""
+  local logo_volume_low=""
+  local logo_volume_mute=""
+  local Vol_raw=$(awk '/dB/' <(amixer get Master))
+  local Volume_percentage=$(awk '/dB/ { gsub(/[\[\]]/,""); print $4}' <(amixer get Master)| sed -e 's/%//g')
+  if [ "$(echo $Vol_raw | awk '/dB/ { gsub(/[\[\]]/,""); print $6}')" == "on" ]
   then
-    Volume=$color_selected$logo_volume_high #ganze kraft
+    if [ $Volume_percentage -ge 60 ]
+    then
+      Volume=$color_selected$logo_volume_high #ganze kraft
+    else
+      Volume=$color_selected$logo_volume_low #weniger
+    fi
   else
-    Volume=$color_selected$logo_volume_low #weniger
+    Volume=$color_warning$logo_volume_mute #mute symbol
   fi
-else
-  Volume=$color_warning$logo_volume_mute #mute symbol
-fi
-Volume+=$color_normal$Volume_percentage" "
+  Volume+=$color_normal$Volume_percentage" "
+  echo $Volume
+}
 
 #Batterie
 logo_bat=""
@@ -240,7 +244,7 @@ then
 fi
 
 #Zusammenfassung
-Output=$Daemon$Net_status$Cpu$Temp$Mem$Bat_stat$Volume$Display$Date
+Output=$Daemon$Net_status$Cpu$Temp$Mem$Bat_stat$(volume)$Display$Date
 if [ "$1" != "" ]
 then #mit Parameter gestarted (debug)
   echo $Output
