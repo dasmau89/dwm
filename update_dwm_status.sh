@@ -1,15 +1,15 @@
 #!/bin/bash
-color_normal=""
-color_selected=""
-color_warning=""
-color_error=""
+declare color_normal=""
+declare color_selected=""
+declare color_warning=""
+declare color_error=""
 #color_statuscolors=""
-color_ok=""
-color_yellow=""
+declare color_ok=""
+declare color_yellow=""
 
 #Time and Date
-logo_date_clock=""
-Date=$color_selected$logo_date_clock$color_normal$(date +"%a, %d.%m %R")
+declare logo_date_clock=""
+declare Date=$color_selected$logo_date_clock$color_normal$(date +"%a, %d.%m %R")
 
 #Audio
 logo_volume_high=""
