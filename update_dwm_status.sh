@@ -216,24 +216,26 @@ else
 fi
 
 #coretemp
-logo_temp=""
-Temp_data0=$(sensors | grep Core\ 0 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
-if [ "$Temp_data0" != "" ]
-then
-  Temp_data0+=" "
-fi
-Temp_data1=$(sensors | grep Core\ 1 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
-if [ "$Temp_data1" != "" ]
-then
-  Temp_data1+=" "
-fi
-Temp_data2=$(sensors | grep Core\ 2 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
-if [ "$Temp_data2" != "" ]
-then
-  Temp_data2+=" "
-fi
-Temp_data3=$(sensors | grep Core\ 3 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
-Temp=$color_selected$logo_temp$color_normal$Temp_data0$Temp_data1$Temp_data2$Temp_data3" "
+declare -r logo_temp=""
+coretemp() {
+  Temp_data0=$(sensors | grep Core\ 0 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
+  if [ "$Temp_data0" != "" ]
+  then
+    Temp_data0+=" "
+  fi
+  Temp_data1=$(sensors | grep Core\ 1 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
+  if [ "$Temp_data1" != "" ]
+  then
+    Temp_data1+=" "
+  fi
+  Temp_data2=$(sensors | grep Core\ 2 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
+  if [ "$Temp_data2" != "" ]
+  then
+    Temp_data2+=" "
+  fi
+  Temp_data3=$(sensors | grep Core\ 3 | awk '{print $3}' | sed -e 's/+//g' -e 's/\.0//g')
+  echo $color_selected$logo_temp$color_normal$Temp_data0$Temp_data1$Temp_data2$Temp_data3" "
+}
 
 #daemonlogos
 #trident: 
@@ -249,7 +251,7 @@ then
 fi
 
 #Zusammenfassung
-Output=$Daemon$(network)$Cpu$Temp$Mem$(battery)$(volume)$Display$Date
+Output=$Daemon$(network)$Cpu$(coretemp)$Mem$(battery)$(volume)$Display$Date
 if [ "$1" != "" ]
 then #mit Parameter gestarted (debug)
   echo $Output
