@@ -98,73 +98,75 @@ battery() {
 #Cpu
 #Cpu=$color_selected""$color_normal" "$(top -bn 1 | grep '%Cpu' | awk '{print $2'})"  "
 
-#Netzwerk
-logo_net=""
-logo_net_lan=""
-logo_net_wlan=""
-logo_net_wlan_high=""
-logo_net_wlan_medium=""
-logo_net_wlan_low=""
-if [ -f /sys/class/net/wlan0/address ] #wlan0 present? check for mac address
-then
-  Ip=$(ifconfig wlan0 | head -n 2 | sed -e 's/inet//g' | awk '{print $1}' | grep -v wlan0:)
-  #ifconfig is deprecated FIXME
-  if [ "$Ip" != "ether" ] #wlan up
+#network
+declare -r logo_net=""
+declare -r logo_net_lan=""
+declare -r logo_net_wlan=""
+declare -r logo_net_wlan_high=""
+declare -r logo_net_wlan_medium=""
+declare -r logo_net_wlan_low=""
+network() {
+  if [ -f /sys/class/net/wlan0/address ] #wlan0 present? check for mac address
   then
-    Ssid=$(iwconfig wlan0 | head -n 1 | sed -e 's/ESSID://g' | sed -e 's/\"//g' | awk '{for (i = 4; i <= NF; i++) printf $i " "; print ""}')
-    if [ "$Ssid" == "off/any" ] #wlan is currently dissconnecting
+    Ip=$(ifconfig wlan0 | head -n 2 | sed -e 's/inet//g' | awk '{print $1}' | grep -v wlan0:)
+    #ifconfig is deprecated FIXME
+    if [ "$Ip" != "ether" ] #wlan up
     then
-      Ip=""
-    else
+      Ssid=$(iwconfig wlan0 | head -n 1 | sed -e 's/ESSID://g' | sed -e 's/\"//g' | awk '{for (i = 4; i <= NF; i++) printf $i " "; print ""}')
+      if [ "$Ssid" == "off/any" ] #wlan is currently dissconnecting
+      then
+        Ip=""
+      else
+        if [ "$Ip" == "6" ]
+        then
+          Ip=$color_normal"connecting ..."
+          Ssid=$Ip" "$Ssid #since i removed ip from displaying
+        fi
+        Net_quality=$(iwconfig wlan0 | awk '{print $2}' | grep Quality | sed -e 's/Quality=//g' | tr "/" " ")
+        Net_percentage=$(echo $Net_quality | awk '{print ($1*100/$2)}' | tr "." " " | awk '{print $1}')
+        if [ $Net_percentage -ge 60 ] #Net_percentage > 60%
+        then
+          Net_percentage_icon=$color_ok$logo_net_wlan_high #"" 3 bars
+        else
+          if [ $Net_percentage -ge 40 ]
+          then
+            Net_percentage_icon=$color_yellow$logo_net_wlan_medium #"" 2 bars
+          else
+            Net_percentage_icon=$color_error$logo_net_wlan_low #"" 1 bar remaining
+          fi
+        fi
+        Net=$color_normal$Ssid$Net_percentage_icon    #$Ip" "$Ssid
+      fi
+    fi
+  fi
+  if [ "$Ip" == "ether" ] || [ "$Ip" == "" ] #wlan0 not present or has no ip address assigned
+  then
+    Ip=$(ifconfig eth0 | head -n 2 | sed -e 's/inet//g' | awk '{print $1}' | grep -v eth0:)
+    if [ "$Ip" == "ether" ] || [ "$Ip" == "" ] #eth down
+    then
+      if [ -f /sys/class/net/wlan0/address ] #check if wlan0 is present
+      then
+        if [ "$(iwconfig wlan0 | grep Tx-Power | sed -e 's/=/ /g' | awk '{print $6}')" == "off" ] #wlan turned off
+        then
+          Net=$color_error"off "$logo_net_wlan
+        else
+          Net=$color_warning"down "$logo_net_wlan
+        fi
+      else
+        Net=$color_error"down "$logo_net_lan
+      fi
+    else #eth0 up
       if [ "$Ip" == "6" ]
       then
-        Ip=$color_normal"connecting ..."
-        Ssid=$Ip" "$Ssid #since i removed ip from displaying
-      fi
-      Net_quality=$(iwconfig wlan0 | awk '{print $2}' | grep Quality | sed -e 's/Quality=//g' | tr "/" " ")
-      Net_percentage=$(echo $Net_quality | awk '{print ($1*100/$2)}' | tr "." " " | awk '{print $1}')
-      if [ $Net_percentage -ge 60 ] #Net_percentage > 60%
-      then
-        Net_percentage_icon=$color_ok$logo_net_wlan_high #"" 3 bars
+        Ip=$color_normal"connecting ... "
+        Net=$Ip$logo_net_lan #show that eth0 is connecting
       else
-        if [ $Net_percentage -ge 40 ]
-        then
-          Net_percentage_icon=$color_yellow$logo_net_wlan_medium #"" 2 bars
-        else
-          Net_percentage_icon=$color_error$logo_net_wlan_low #"" 1 bar remaining
-        fi
+        Net=$color_normal$Ip$color_ok$logo_net_lan
       fi
-      Net=$color_normal$Ssid$Net_percentage_icon    #$Ip" "$Ssid
     fi
   fi
-fi
-if [ "$Ip" == "ether" ] || [ "$Ip" == "" ] #wlan0 not present or has no ip address assigned
-then
-  Ip=$(ifconfig eth0 | head -n 2 | sed -e 's/inet//g' | awk '{print $1}' | grep -v eth0:)
-  if [ "$Ip" == "ether" ] || [ "$Ip" == "" ] #eth down
-  then
-    if [ -f /sys/class/net/wlan0/address ] #check if wlan0 is present
-    then
-      if [ "$(iwconfig wlan0 | grep Tx-Power | sed -e 's/=/ /g' | awk '{print $6}')" == "off" ] #wlan turned off
-      then
-        Net=$color_error"off "$logo_net_wlan
-      else
-        Net=$color_warning"down "$logo_net_wlan
-      fi
-    else
-      Net=$color_error"down "$logo_net_lan
-    fi
-  else #eth0 up
-    if [ "$Ip" == "6" ]
-    then
-      Ip=$color_normal"connecting ... "
-      Net=$Ip$logo_net_lan #show that eth0 is connecting
-    else
-      Net=$color_normal$Ip$color_ok$logo_net_lan
-    fi
-  fi
-fi
-Net_status=$color_selected$logo_net$Net" "
+  echo $color_selected$logo_net$Net" "
+}
 
 #Daemons
 if [ -d /var/run/cups/ ]
@@ -247,7 +249,7 @@ then
 fi
 
 #Zusammenfassung
-Output=$Daemon$Net_status$Cpu$Temp$Mem$(battery)$(volume)$Display$Date
+Output=$Daemon$(network)$Cpu$Temp$Mem$(battery)$(volume)$Display$Date
 if [ "$1" != "" ]
 then #mit Parameter gestarted (debug)
   echo $Output
