@@ -168,52 +168,71 @@ network() {
   echo $color_selected$logo_net$Net" "
 }
 
-#Daemons
-if [ -d /var/run/cups/ ]
-then
-  Daemon+=$color_ok"CUPS"
-else
-  Daemon+=$color_error"CUPS"
-fi
 
-Dropbox_pid=$(pidof dropbox)
-if [ "$Dropbox_pid" != "" ]
-then
-  Daemon+=$color_ok"Dropbox"
-else
-  Daemon+=$color_error"Dropbox"
-fi
+####################
+# daemons / services
+####################
 
-if [ -d /var/run/httpd/ ]
-then
-  if [ -f /var/run/httpd/httpd.pid ]
+# check if cups is running
+daemon_cups(){
+  if [ -d /var/run/cups/ ]
   then
-    Daemon+=$color_ok"HTTP"
+    echo $color_ok"CUPS"
   else
-    Daemon+=$color_error"HTTP"
+    echo $color_error"CUPS"
   fi
-else
-  Daemon+=$color_error"HTTP"
-fi
+}
 
-if [ -d /var/run/mysqld/ ]
-then
-  if [ -f /var/run/mysqld/mysqld.pid ]
+# check if dropbox is running
+daemon_dropbox() {
+  local Dropbox_pid=$(pidof dropbox)
+  if [ "$Dropbox_pid" != "" ]
   then
-    Daemon+=$color_ok"MySql"
+    echo $color_ok"Dropbox"
   else
-    Daemon+=$color_error"MySql"
+    echo $color_error"Dropbox"
   fi
-else
-  Daemon+=$color_error"MySql"
-fi
+}
 
-if [ -f /var/run/sshd.pid ]
-then
-  Daemon+=$color_ok"SSH"
-else
-  Daemon+=$color_error"SSH"
-fi
+# check if apache is running
+daemon_http() {
+  if [ -d /var/run/httpd/ ]
+  then
+    if [ -f /var/run/httpd/httpd.pid ]
+    then
+      echo $color_ok"HTTP"
+    else
+      echo $color_error"HTTP"
+    fi
+  else
+    echo $color_error"HTTP"
+  fi
+}
+
+# check if mysql is running
+daemon_mysql() {
+  if [ -d /var/run/mysqld/ ]
+  then
+    if [ -f /var/run/mysqld/mysqld.pid ]
+    then
+      echo $color_ok"MySql"
+    else
+      echo $color_error"MySql"
+    fi
+  else
+    echo $color_error"MySql"
+  fi
+}
+
+# check if ssh daemon is running
+daemon_ssh() {
+  if [ -f /var/run/sshd.pid ]
+  then
+    echo $color_ok"SSH"
+  else
+    echo $color_error"SSH"
+  fi
+}
 
 #coretemp
 declare -r logo_temp=""
@@ -237,10 +256,13 @@ coretemp() {
   echo $color_selected$logo_temp$color_normal$Temp_data0$Temp_data1$Temp_data2$Temp_data3" "
 }
 
-#daemonlogos
+
+# daemonlogos
 #trident: 
-logo_deamon=""
-Daemon=$color_selected$logo_deamon$Daemon" "
+declare -r logo_deamon=""
+daemons() {
+  echo $color_selected$logo_deamon$(daemon_cups)$(daemon_dropbox)$(daemon_http)$(daemon_mysql)$(daemon_ssh)" "
+}
 
 if [ -f /sys/class/backlight/acpi_video0/brightness ] #am laptop
 then
@@ -251,7 +273,7 @@ then
 fi
 
 #Zusammenfassung
-Output=$Daemon$(network)$Cpu$(coretemp)$Mem$(battery)$(volume)$Display$Date
+Output=$(daemons)$(network)$Cpu$(coretemp)$Mem$(battery)$(volume)$Display$Date
 if [ "$1" != "" ]
 then #mit Parameter gestarted (debug)
   echo $Output
