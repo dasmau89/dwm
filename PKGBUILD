@@ -12,7 +12,6 @@ arch=('i686' 'x86_64')
 license=('MIT')
 options=(zipman)
 depends=('libx11' 'libxinerama' 'profont')
-install=dwm.install
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 		config.h
 		dwm.desktop
@@ -21,11 +20,11 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
         update_dwm_status.sh
 )
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         '62152189fcb20171aaeda8e495b3ed4a'
+         'f28419012949f80f5f54fa0e5f9747fe'
          'cb23306361d4d85d0ae89c7f68ad2c8a'
          '799e7f4979fe081d2b73cf0d255d3ac7'
          'd9f5b18b7ece55e15b85b149c6eaad90'
-         '802c81f6748ec050b55289307937788f')
+         'bd5c5bc65d13a8e9f7e474182edbc787')
 build() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
