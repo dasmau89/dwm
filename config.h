@@ -44,6 +44,7 @@ static const Rule rules[] = {
     { "BitThief",   NULL,       NULL,       0,          True,       True,       -1 },
     { "bluej-Boot", NULL,       NULL,       1 << 3,     True,       True,       -1 },
     { "brogue",     NULL,       NULL,       1 << 7,     True,       False,      -1 },
+    { "claws-mail", NULL,       NULL,       1 << 2,     False,      False,      -1 },
     { "Clementine", NULL,       NULL,       1 << 4,     False,      False,      -1 },
     { "chromium",   NULL,       NULL,       1 << 1,     False,      False,      -1 },
     { "crawl-tiles",NULL,       NULL,       1 << 7,     True,       False,      -1 },
