@@ -61,6 +61,7 @@ static const Rule rules[] = {
     { "Gvim",       NULL,       NULL,       1 << 3,     False,      False,      -1 },
     { "Gmpc",       NULL,       NULL,       1 << 4,     False,      False,      -1 },
     { "Kdiff3",     NULL,       NULL,       1 << 3,     False,      False,      -1 },
+    { "KeePass2",   NULL,       NULL,       1 << 6,     True,       False,      -1 },
     { "Midori",     NULL,       NULL,       1 << 1,     False,      False,      -1 },
     { "mono-sgen",  NULL,       NULL,       1 << 7,     True,       False,      -1 },
     { "MPlayer",    NULL,       NULL,       1 << 4,     True,       False,      -1 },
