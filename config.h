@@ -14,7 +14,8 @@ static const char colors[NUMCOLORS][ColLast][8] = {
     // add more here
 };
 
-static const char font[]            = "-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*" "," "-*-profont-*-*-*-*-12-*-*-*-*-*-*-*"; // "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
+//static const char font[]            = "-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*" "," "-*-profont-*-*-*-*-12-*-*-*-*-*-*-*"; // "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
+static const char font[]            = "-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1" "," "-*-profont-*-*-*-*-12-*-*-*-*-*-*-*"; // "-*-tamsyn-medium-r-normal-*-12-*-*-*-*-*-*-1";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#000000";
 static const char normfgcolor[]     = "#7788cc";
@@ -32,8 +33,8 @@ static const Bool systray_enable    = True;     /* for systray-patch*/
 static const Bool showsystray       = True;     /* False means no systray */
 
 /* tagging */
-
-static const char *tags[] = { "term", "web", "comm", "coding", "media", "file", "misc", "game"};
+// use echo -e "\uCODE" to get symbols
+static const char *tags[] = { "", "", "", "", /**/ "", "", "", ""};
 //xprop
 static const Rule rules[] = {
     /* class        instance    title       tags mask   isfloating  iscentred   monitor */
@@ -60,6 +61,7 @@ static const Rule rules[] = {
     { "Gnome-mplayer",NULL,     NULL,       1 << 4,     True,       False,      -1 },
     { "Gvim",       NULL,       NULL,       1 << 3,     False,      False,      -1 },
     { "Gmpc",       NULL,       NULL,       1 << 4,     False,      False,      -1 },
+    { "jetbrains-studio",    	NULL,       NULL,       1 << 3,     False,      False,      -1 },
     { "Kdiff3",     NULL,       NULL,       1 << 3,     False,      False,      -1 },
     { "KeePass2",   NULL,       NULL,       1 << 6,     True,       False,      -1 },
     { "Midori",     NULL,       NULL,       1 << 1,     False,      False,      -1 },
@@ -95,9 +97,9 @@ static const Bool resizehints = True; /* True means respect size hints in tiled 
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    { "[T]",      tile },    /* first entry is default */
-    { "[F]",      NULL },    /* no layout function means floating behavior */
-    { "[M]",      monocle },
+    { "",      tile },    /* first entry is default */
+    { "",      NULL },    /* no layout function means floating behavior */
+    { "",      monocle },
 };
 
 /* key definitions */

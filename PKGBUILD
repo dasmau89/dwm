@@ -11,7 +11,7 @@ url="http://dwm.suckless.org"
 arch=('i686' 'x86_64')
 license=('MIT')
 options=(zipman)
-depends=('libx11' 'libxinerama' 'profont')
+depends=('libx11' 'libxinerama' 'siji-git' 'profont')
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 		config.h
 		dwm.desktop
@@ -20,11 +20,11 @@ source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
         update_dwm_status.sh
 )
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         '1233ecb5f5614d84bc9c016c7d5b4656'
+         '1630484422f97e6b0f831b0ef63fb6f4'
          'cb23306361d4d85d0ae89c7f68ad2c8a'
          '799e7f4979fe081d2b73cf0d255d3ac7'
          'd9f5b18b7ece55e15b85b149c6eaad90'
-         'bd5c5bc65d13a8e9f7e474182edbc787')
+         '141fb3c314cda2c5d041f4a5d6d4373a')
 build() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
