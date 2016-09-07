@@ -34,7 +34,7 @@ static const Bool showsystray       = True;     /* False means no systray */
 
 /* tagging */
 // use echo -e "\uCODE" to get symbols
-static const char *tags[] = { "", "", "", "", /**/ "", "", "", ""};
+static const char *tags[] = { "", "", "", "", /**/ "", "", "", ""};
 //xprop
 static const Rule rules[] = {
     /* class        instance    title       tags mask   isfloating  iscentred   monitor */
