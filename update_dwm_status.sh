@@ -133,6 +133,11 @@ network() {
             Net_percentage_icon=$color_error$logo_net_wlan_low #"" 1 bar remaining
           fi
         fi
+        Vpn=$(vpn)
+        if [ "$Vpn" != "" ]
+        then
+          Ssid=$Ssid$Vpn
+        fi
         Net=$color_normal$Ssid$Net_percentage_icon    #$Ip" "$Ssid
       fi
     fi
@@ -144,12 +149,16 @@ network() {
     then
       if [ -f /sys/class/net/wlan0/address ] #check if wlan0 is present
       then
-        if [ "$(iwconfig wlan0 | grep Tx-Power | sed -e 's/=/ /g' | awk '{print $6}')" == "off" ] #wlan turned off
-        then
-          Net=$color_error$logo_net_wlan_down
-        else
-          Net=$color_warning$logo_net_wlan_down
-        fi
+ #       if [ "$(iwconfig wlan0 | grep Tx-Power | sed -e 's/=/ /g' | awk '{print $6}')" == "off" ] #wlan turned off
+ #       then
+ #         # no connection, but powered
+ #         Net=$color_error$logo_net_wlan_down
+ #       else
+ #         # no connection & no power
+ #         Net=$color_warning$logo_net_wlan_down
+ #       fi
+        # no further need to query -> down is down
+        Net=$color_error$logo_net_wlan_down
       else
         Net=$color_error$logo_net_lan
       fi
@@ -164,6 +173,15 @@ network() {
     fi
   fi
   echo $color_selected$logo_net$Net
+}
+
+
+vpn(){ 
+  local logo_vpn="" 
+  if [ -f /var/run/vpnc.pid ]
+  then
+    echo $logo_vpn
+  fi
 }
 
 
