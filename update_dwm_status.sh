@@ -83,10 +83,15 @@ battery() {
           Bat_time=""
         fi
       fi
+      # display time in white
+      if [ "$Bat_time" != "" ]
+      then
+        Bat_time=$color_normal$Bat_time
+      fi
       Bat_stat=$Bat_status$Bat_time$Bat_logo" "
     fi
   fi
-  echo $Bat_stat
+  echo " "$Bat_stat # space before time when discharging
 }
 
 #Ram (benutzte Prozente = gesammt($2)-(frei+cache($4+$7))/gesammt)
