@@ -3,4 +3,4 @@ rm -rf src/
 rm -rf pkg/
 rm *.c
 updpkgsums
-makepkg -fi
+makepkg -fis
